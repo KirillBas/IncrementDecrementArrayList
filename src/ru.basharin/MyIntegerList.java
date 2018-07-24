@@ -14,6 +14,9 @@ public class MyIntegerList implements Cloneable, Serializable {
 
     public boolean add(int number) {
         updateSize(size + 1);
+        for (int i = 0; i < integerData.length; i++) {
+            integerData[i]+=number;
+        }
         integerData[size++] = number;
         return true;
     }
@@ -21,6 +24,9 @@ public class MyIntegerList implements Cloneable, Serializable {
     public boolean delete(Object o) {
         for (int i = 0; i < integerData.length; i++) {
             if (o.equals(integerData[i])) {
+                for (int j = 0; j < integerData.length; j++) {
+                    integerData[j]+=(int) o;
+                }
                 remove(i);
             }
         }
@@ -28,23 +34,32 @@ public class MyIntegerList implements Cloneable, Serializable {
     }
 
     public int searchIndex(int index) {
-        return 1;
+        return MyIntegerList.this.integerData[index];
     }
 
-    public int searchValue(int value) {
-        return 1;
+    public int searchValue(Object o) {
+        for (int i = 0; i < integerData.length; i++) {
+            if (o.equals(integerData[i])) {
+                return integerData[i];
+            }
+        }
+        return -1;
     }
 
     public int searchMax() {
-        return 1;
+        return Math.max(integerData[0], integerData[integerData.length-1]);
     }
 
     public int searchMin() {
-        return 1;
+        return Math.min(integerData[0], integerData[integerData.length-1]);
     }
 
     public int average() {
-        return 1;
+        int average= 0;
+        for (int i = 0; i < integerData.length; i++) {
+            average+=integerData[i];
+        }
+        return average/integerData.length;
     }
 
     private void updateSize(int minCapacity) {
