@@ -5,11 +5,11 @@ import java.util.Arrays;
 
 public class MyIntegerList implements Cloneable, Serializable {
     private final int defaultCapacity = 10;
-    private int[] integerData = new int[defaultCapacity];
+    private int[] integerData;
     private int size;
 
     public MyIntegerList() {
-        this.integerData = integerData;
+        this.integerData = new int[defaultCapacity];
     }
 
     public boolean add(int number) {
@@ -21,25 +21,28 @@ public class MyIntegerList implements Cloneable, Serializable {
         return true;
     }
 
-    public boolean delete(Object o) {
+    public boolean delete(int o) {
         for (int i = 0; i < integerData.length; i++) {
-            if (o.equals(integerData[i])) {
+            if (o == integerData[i]) {
                 for (int j = 0; j < integerData.length; j++) {
-                    integerData[j]+=(int) o;
+                    integerData[j]-= o;
                 }
                 remove(i);
             }
         }
-        return true;
+        return false;
     }
 
     public int searchIndex(int index) {
-        return MyIntegerList.this.integerData[index];
+        if (!checkSize(index)){
+            return MyIntegerList.this.integerData[index];
+        }
+        return -1;
     }
 
-    public int searchValue(Object o) {
+    public int searchValue(int o) {
         for (int i = 0; i < integerData.length; i++) {
-            if (o.equals(integerData[i])) {
+            if (o == integerData[i]) {
                 return integerData[i];
             }
         }
@@ -74,13 +77,22 @@ public class MyIntegerList implements Cloneable, Serializable {
     }
 
     private void remove(int index) {
-        int numMoved = size - index - 1;
-        if (numMoved > 0)
-            System.arraycopy(integerData, index+1, integerData, index, numMoved);
-        integerData[--size] = 0;
+        if (!checkSize(index)){
+            int numMoved = size - index - 1;
+            if (numMoved > 0)
+                System.arraycopy(integerData, index+1, integerData, index, numMoved);
+            integerData[--size] = 0;
+        }
     }
 
     public int size() {
         return size;
+    }
+
+    private boolean checkSize(int index) {
+        if (index>size || index<0) {
+            System.out.println("Index not found");;
+        }
+        return true;
     }
 }
