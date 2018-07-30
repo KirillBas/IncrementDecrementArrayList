@@ -1,14 +1,13 @@
 package ru.basharin;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
-public class MyIntegerList implements Cloneable, Serializable {
+public class IncrementDecrementArrayList {
     private final int defaultCapacity = 10;
     private int[] integerData;
     private int size;
 
-    public MyIntegerList() {
+    public IncrementDecrementArrayList() {
         this.integerData = new int[defaultCapacity];
     }
 
@@ -35,7 +34,7 @@ public class MyIntegerList implements Cloneable, Serializable {
 
     public int searchIndex(int index) {
         if (!checkSize(index)){
-            return MyIntegerList.this.integerData[index];
+            return IncrementDecrementArrayList.this.integerData[index];
         }
         return -1;
     }
