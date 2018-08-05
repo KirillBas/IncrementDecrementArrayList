@@ -33,8 +33,12 @@ public class IncrementDecrementArrayList {
     }
 
     public int searchIndex(int index) {
-        if (!checkSize(index)){
-            return IncrementDecrementArrayList.this.integerData[index];
+        try {
+            if (!checkSize(index)){
+                return IncrementDecrementArrayList.this.integerData[index];
+            }
+        } catch (IndexOutListException e) {
+            System.out.println("Выход за пределы массива " + e);
         }
         return -1;
     }
@@ -76,11 +80,15 @@ public class IncrementDecrementArrayList {
     }
 
     private void remove(int index) {
-        if (!checkSize(index)){
-            int numMoved = size - index - 1;
-            if (numMoved > 0)
-                System.arraycopy(integerData, index+1, integerData, index, numMoved);
-            integerData[--size] = 0;
+        try {
+            if (!checkSize(index)) {
+                int numMoved = size - index - 1;
+                if (numMoved > 0)
+                    System.arraycopy(integerData, index+1, integerData, index, numMoved);
+                integerData[--size] = 0;
+            }
+        } catch (IndexOutListException e) {
+            System.out.println("Выход за пределы массива " + e);
         }
     }
 
@@ -88,9 +96,9 @@ public class IncrementDecrementArrayList {
         return size;
     }
 
-    private boolean checkSize(int index) {
+    private boolean checkSize(int index) throws IndexOutListException {
         if (index>size || index<0) {
-            System.out.println("Index not found");;
+            throw new IndexOutListException(index);
         }
         return true;
     }
